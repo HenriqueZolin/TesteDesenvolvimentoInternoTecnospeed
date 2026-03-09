@@ -51,8 +51,8 @@ export async function receiveMessageFila() {
     try {
         const params = {
             QueueUrl: awsQueueUrl,
-            WaitTimeSeconds: 10,
-            MaxNumberOfMessages: 5,
+            WaitTimeSeconds: 15,
+            MaxNumberOfMessages: 1,
             VisibilityTimeout: 30
         }
 
@@ -71,7 +71,7 @@ export async function receiveMessageFila() {
         console.log("IDMongo obtida nas Mensagens:", mongoId)
 
         if(mongoose.isValidObjectId(mongoId)){
-            const statusDelete = tentativaDeleteMessageFila(handleFila)
+            const statusDelete = await tentativaDeleteMessageFila(handleFila)
             
             if(statusDelete) return mongoId
         }else{

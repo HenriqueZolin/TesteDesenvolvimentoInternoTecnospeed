@@ -26,10 +26,13 @@ export async function consultarCepBanco(cep) {
 
 export async function consultarCepPorId(id) {
 
+    
+
     if (!mongoose.isValidObjectId(id)) {
         console.log("Erro ao ler id, id não é do tipo ObjectiveId")
         return
     }
+
     const search = await mongoose.connection
         .useDb("consultaCepNode")
         .collection("cep")
@@ -85,5 +88,30 @@ export async function casoStatusConcluido(id, cepObject) {
     }
 }
 
-// connect()
+export async function insertCep(cep) {
+
+    // console.log(cepBody)
+    // const cep = cepBody.cep
+
+    const insert = await mongoose.connection
+        .useDb("consultaCepNode")
+        .collection("cep")
+        .insertOne(
+            {
+                "cep": cep,
+                "status": "PENDENTE"
+            }
+        )
+
+    if (insert.acknowledged === true) {
+        console.log(`Cep ${cep} inserido no banco com sucesso com id ${insert.insertedId}`)
+        return insert.insertedId
+    } else {
+        console.log("Erro ao inserir registro no banco.")
+        return false
+    }
+
+}
+
+connect()
 // console.log(await consultarCepPorId("69a4aa7b6301234bc0bc1666"))

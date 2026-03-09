@@ -9,8 +9,8 @@ Para rodar o sistema:
 - git clone
 - cd consultacepnode
 - npm i
-- node consumidor/consumidor.js
-- node produtor/produtor.js
+- node workers/consumidor.js
+- node server.js
 
 Versões:
 
@@ -29,3 +29,21 @@ Body:
 {
     "cep":"87020025"
 }
+
+
+v2 - 09/03/2026 
+Alterações na estrutura do projeto, refatorei o código inserindo uma arquitetura MVC, dessa forma dividi ainda mais o produtor e consumidor
+Produtor agora está integrado corretamente em controller/service e roda através de um server.js
+Enquanto o consumidor agora está isonaldo em um Worker
+
+Fiz também uma validação a mais no CNPJ enviando para que este contenha apenas os números
+
+Códigos no geral mais compactados e modulares
+
+http://localhost:7070/cep (post)
+Body:
+{
+    "cep":"87020025"
+}
+
+http://localhost:7070/cep/87020025 (get) <------------- alteracao para retirar o cep do body e colocar como parâmetro
